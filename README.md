@@ -1,5 +1,4 @@
 # EFI-Definitions
-<hr>
 <b><u>EFI Software Downloads</u></b><br>
 Tuner Pro Download - http://www.tunerpro.net/<br>
 ECUFlash Download - https://www.tactrix.com/<br>
