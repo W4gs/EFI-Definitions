@@ -1,0 +1,578 @@
+<rom>
+	<romid>
+		<xmlid>53610313</xmlid>
+		<internalidaddress>5002a</internalidaddress>
+		<internalidhex>53610313</internalidhex>
+		<make>Mitsubishi</make>
+		<market>TDM</market>
+		<model>Lancer</model>
+		<submodel>Ralliart</submodel>
+		<transmission>SST</transmission>
+		<year>2009</year>
+		<flashmethod>mitsucan</flashmethod>
+		<memmodel>M32186F8</memmodel>
+		<checksummodule>mitsucan</checksummodule>
+	</romid>
+
+	<include>53610013</include>
+	<scaling name="AlternateMapMaxCount" min="0" max="9" storagetype="bloblist">
+		<data name="No AltMaps" value="0000"/>
+		<data name="1" value="0001"/>
+		<data name="2" value="0002"/>
+		<data name="3" value="0003"/>
+		<data name="4" value="0004"/>
+		<data name="5" value="0005"/>
+		<data name="6" value="0006"/>
+		<data name="7" value="0007"/>
+		<data name="8" value="0008"/>
+		<data name="9" value="0009"/>
+	</scaling>
+	<scaling name="Crossover_RPMSpeed_Ratio_SST" storagetype="bloblist">
+		<data name="High Gear Map = 1st+" value="FFFF"/>
+		<data name="High Gear Map = 2nd+" value="0E22"/>
+		<data name="High Gear Map = 3rd+" value="09AB"/>
+		<data name="High Gear Map = 4th+" value="0737"/>
+		<data name="High Gear Map = 5th+" value="0578"/>
+		<data name="High Gear Map = 6th" value="042F"/>
+	</scaling>
+	<scaling name="ECUTime" units="ms" toexpr="1000*x/102" frexpr="102*x/1000" format="%.0f" min="0" max="100000" inc="10" storagetype="uint16" endian="big"/>
+	<scaling name="MapSwitchingMaster" storagetype="bloblist">
+		<data name="Off" value="0000"/>
+		<data name="Alt Maps" value="0001"/>
+		<data name="MethSafe" value="0002"/>
+		<data name="Flex Fuel" value="0003"/>
+	</scaling>
+
+	<scaling name="MethSafeMapMaster" storagetype="bloblist">
+		<data name="Off" value="0000"/>
+		<data name="5V ADC" value="0001"/>
+		<data name="Resistor ADC" value="0002"/>
+	</scaling>
+	
+	<scaling name="FlexFuelInput" storagetype="bloblist">
+		<data name="None" value="0000"/>
+		<data name="Fuel Tank Pressure" value="0001"/>
+		<data name="Rear02" value="0002"/>
+		<data name="CANBUS" value="0003"/>
+	</scaling>
+
+
+	<scaling name="Percent256" units="%" toexpr="100*x/256" frexpr="256*x/100" format="%.1f" min="0" max="100" inc="0.5" storagetype="uint16" endian="big"/>
+	<scaling name="RawSpeed" units="km/h" toexpr="x/128" frexpr="x*128" format="%.0f" min="0" max="255" inc="1" storagetype="uint16" endian="big"/>
+	<scaling name="Ethanol_Percent255_byte" units="%" toexpr="x*100/255" frexpr="x*255/100" format="%.1f" min="0" max="100" inc="2" storagetype="uint8" endian="big"/>
+	<scaling name="Ethanol_Percent255_word" units="%" toexpr="x*100/255" frexpr="x*255/100" format="%.1f" min="0" max="100" inc="2" storagetype="uint16" endian="big"/>
+	<scaling name="VoltsADC255" units="Volts" toexpr="x*5/255" frexpr="x*255/5" format="%.2f" min="0" max="5" inc="0.05" storagetype="uint16" endian="big"/>
+
+	<table name="Load Required for CEL on Knock" category="TephraXMOD V3" address="FBE0C" type="1D" scaling="Load"/>
+	<table name="KnockSum Required for Slow CEL (Low Knock)" category="TephraXMOD V3" address="FBE0E" type="1D" scaling="uint16"/>
+	<table name="KnockSum Required for Fast CEL (High Knock)" category="TephraXMOD V3" address="FBE10" type="1D" scaling="uint16"/>
+	<table name="Knock CEL Flash time" category="TephraXMOD V3" address="FBE12" type="1D" scaling="ECUTime"/>
+	<table name="KnockSum Required for TPSCut (Super High Knock)" category="TephraXMOD V3" address="FBE14" type="1D" scaling="uint16"/>
+	<table name="Max TPS when seeing High Knock" category="TephraXMOD V3" address="FBE16" type="1D" scaling="Throttle Opening"/>
+
+	<table name="Map Switching Master (0=OFF, 1=Alt Map, 2=MethSafe, 3=Flex)" category="TephraXMOD V3" address="FBE18" type="1D" scaling="MapSwitchingMaster"/>
+	<table name="MethSafe Map Master (0=OFF, 1=5V ADC, 2=Resistor ADC)" category="TephraXMOD V3" address="FBE1A" type="1D" scaling="MethSafeMapMaster"/>
+
+	<table name="Alternate Map Max Count" category="TephraXMOD V3" address="FBE1C" type="1D" scaling="AlternateMapMaxCount"/>
+
+	<table name="MethSafe/Alternate Map Load Threshold" category="TephraXMOD V3" address="FBE1E" type="1D" scaling="Load"/>
+	<table name="MethSafe/Alternate Map Time to Activate/Swap" category="TephraXMOD V3" address="FBE20" type="1D" scaling="ECUTime"/>
+	<table name="MethSafe ADC Threshold" category="TephraXMOD V3" address="FBE22" type="1D" scaling="VoltsADC1023"/>
+
+	<table name="High/Low Gear MIVEC Crossover (SST)" category="TephraXMOD V3" address="FBE24" type="1D" scaling="Crossover_RPMSpeed_Ratio_SST"/>
+
+	<table name="RPM Drop on NLTS" category="TephraXMOD V3" address="FBE26" type="1D" scaling="RPM"/>
+	<table name="Minimum Speed required for NLTS" category="TephraXMOD V3" address="FBE28" type="1D" scaling="RawSpeed"/>
+	<table name="Minimum RPM required for NLTS" category="TephraXMOD V3" address="FBE2A" type="1D" scaling="RPM"/>
+	<table name="Maximum Speed permitted for Launch Maps" category="TephraXMOD V3" address="FBE2C" type="1D" scaling="RawSpeed"/>
+	<table name="Minimum TPS required for NLTS or Launch Maps" category="TephraXMOD V3" address="FBE2E" type="1D" scaling="Percent256"/>
+
+	<table name="Flex Fuel Input Method" category="TephraXMOD V3" address="FBE32" type="1D" scaling="FlexFuelInput"/>
+	<table name="Flex Averaging Period" category="TephraXMOD V3" address="FBE34" type="1D" scaling="uint16"/>
+	<table name="Flex Sensor Range CEL" category="TephraXMOD V3" address="FBE36" type="1D" scaling="Ethanol_Percent255_word"/>		
+	<table name="Flex Sensor Minimim Voltage Allowed" category="TephraXMOD V3" address="FBE38" type="1D" scaling="VoltsADC255"/>
+
+
+	<table name="MIVEC Intake #2 - Hot/Interpolated - (Low Gear Range)" category="TephraXMOD V3" address="fc007" type="3D" swapxy="true" scaling="ValveTimingIntake">
+		<table name="Load" address="617dc" type="X Axis" elements="21" scaling="Load"/>
+		<table name="RPM" address="6180c" type="Y Axis" elements="24" scaling="RPM"/>
+	</table>
+
+	<table name="MIVEC Exhaust #2 - Hot/Interpolated - (Low Gear Range)" category="TephraXMOD V3" address="fc207" type="3D" swapxy="true" scaling="ValveTimingExhaust">
+		<table name="Load" address="617dc" type="X Axis" elements="21" scaling="Load"/>
+		<table name="RPM" address="6180c" type="Y Axis" elements="24" scaling="RPM"/>
+	</table>
+	<table name="------------- Alternate #1 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #1 Fuel Injector Scaling" address="f1000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #1 High Octane Fuel Map" address="f1009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #1 High Octane Timing Map" address="f1167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #1 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f1377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #1 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f1427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #1 Boost Target #1 (High Gear Range)" address="f1517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #1 Boost Target #2 (Low Gear Range)" address="f15c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #1 Cranking Enrichment IPW Adder" address="f1674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #1 Rev Limiter" address="f1e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #2 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #2 Fuel Injector Scaling" address="f2000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #2 High Octane Fuel Map" address="f2009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #2 High Octane Timing Map" address="f2167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #2 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f2377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #2 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f2427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #2 Boost Target #1 (High Gear Range)" address="f2517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #2 Boost Target #2 (Low Gear Range)" address="f25c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #2 Cranking Enrichment IPW Adder" address="f2674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #2 Rev Limiter" address="f2e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #3 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #3 Fuel Injector Scaling" address="f3000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #3 High Octane Fuel Map" address="f3009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #3 High Octane Timing Map" address="f3167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #3 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f3377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #3 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f3427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #3 Boost Target #1 (High Gear Range)" address="f3517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #3 Boost Target #2 (Low Gear Range)" address="f35c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #3 Cranking Enrichment IPW Adder" address="f3674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #3 Rev Limiter" address="f3e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #4 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #4 Fuel Injector Scaling" address="f4000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #4 High Octane Fuel Map" address="f4009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #4 High Octane Timing Map" address="f4167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #4 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f4377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #4 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f4427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #4 Boost Target #1 (High Gear Range)" address="f4517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #4 Boost Target #2 (Low Gear Range)" address="f45c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #4 Cranking Enrichment IPW Adder" address="f4674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #4 Rev Limiter" address="f4e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #5 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #5 Fuel Injector Scaling" address="f5000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #5 High Octane Fuel Map" address="f5009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #5 High Octane Timing Map" address="f5167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #5 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f5377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #5 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f5427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #5 Boost Target #1 (High Gear Range)" address="f5517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #5 Boost Target #2 (Low Gear Range)" address="f55c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #5 Cranking Enrichment IPW Adder" address="f5674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #5 Rev Limiter" address="f5e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #6 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #6 Fuel Injector Scaling" address="f6000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #6 High Octane Fuel Map" address="f6009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #6 High Octane Timing Map" address="f6167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #6 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f6377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #6 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f6427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #6 Boost Target #1 (High Gear Range)" address="f6517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #6 Boost Target #2 (Low Gear Range)" address="f65c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #6 Cranking Enrichment IPW Adder" address="f6674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #6 Rev Limiter" address="f6e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #7 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #7 Fuel Injector Scaling" address="f7000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #7 High Octane Fuel Map" address="f7009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #7 High Octane Timing Map" address="f7167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #7 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f7377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #7 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f7427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #7 Boost Target #1 (High Gear Range)" address="f7517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #7 Boost Target #2 (Low Gear Range)" address="f75c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #7 Cranking Enrichment IPW Adder" address="f7674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #7 Rev Limiter" address="f7e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #8 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #8 Fuel Injector Scaling" address="f8000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #8 High Octane Fuel Map" address="f8009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #8 High Octane Timing Map" address="f8167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #8 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f8377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #8 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f8427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #8 Boost Target #1 (High Gear Range)" address="f8517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #8 Boost Target #2 (Low Gear Range)" address="f85c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #8 Cranking Enrichment IPW Adder" address="f8674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #8 Rev Limiter" address="f8e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- Alternate #9 -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="Alternate #9 Fuel Injector Scaling" address="f9000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="Alternate #9 High Octane Fuel Map" address="f9009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #9 High Octane Timing Map" address="f9167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #9 Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f9377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #9 Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f9427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #9 Boost Target #1 (High Gear Range)" address="f9517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #9 Boost Target #2 (Low Gear Range)" address="f95c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="Alternate #9 Cranking Enrichment IPW Adder" address="f9674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="Alternate #9 Rev Limiter" address="f9e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+
+	<table name="------------- MethSafe -------------" category="TephraXMOD V3" type="1D"/>
+	<table name="MethSafe Fuel Injector Scaling" address="f0000" category="TephraXMOD V3" type="1D" scaling="InjectorScaling"/>
+
+	<table name="MethSafe High Octane Fuel Map" address="f0009" category="TephraXMOD V3" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" type="X Axis" address="6112c" elements="21" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61106" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="MethSafe High Octane Timing Map" address="f0167" category="TephraXMOD V3" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" type="X Axis" address="611a6" elements="22" scaling="Load"/>
+		<table name="RPM" type="Y Axis" address="61172" elements="23" scaling="RPM"/>
+	</table>
+
+	<table name="MethSafe Reactive Solenoid Base WGDC Map #1 (High Gear Range)" address="f0377" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="MethSafe Reactive Solenoid Base WGDC Map #2 (Low Gear Range)" address="f0427" category="TephraXMOD V3" type="3D" swapxy="true" scaling="WGDuty">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="MethSafe Boost Target #1 (High Gear Range)" address="f0517" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="MethSafe Boost Target #2 (Low Gear Range)" address="f05c7" category="TephraXMOD V3" type="3D" swapxy="true" scaling="psia8">
+		<table name="Throttle" type="X Axis" address="6286a" elements="9" scaling="Throttle_Main - Stored Minimum Throttle %"/>
+		<table name="RPM" type="Y Axis" address="627e8" elements="18" scaling="RPM"/>
+	</table>
+
+	<table name="MethSafe Cranking Enrichment IPW Adder" address="f0674" category="TephraXMOD V3" type="2D" scaling="CrankingIPW">
+		<table name="Coolant Temperature" address="6127e" type="Y Axis" elements="11" scaling="Temp"/>
+	</table>
+
+	<table name="MethSafe Rev Limiter" address="f0e90" category="TephraXMOD V3" type="2D" scaling="RPMLimit">
+		<table type="Static Y Axis" elements="2">
+			<data>Rev Limiter ON</data>
+			<data>Rev Limiter OFF</data>
+		</table>
+	</table>
+	<table name="Launch High Octane Fuel Map" category="TephraXMOD V3" address="fa009" type="3D" swapxy="true" scaling="AFR">
+		<table name="Load" address="6112c" type="X Axis" elements="21" scaling="Load"/>
+		<table name="RPM" address="61106" type="Y Axis" elements="16" scaling="RPM"/>
+	</table>
+
+	<table name="Launch High Octane Timing Map" category="TephraXMOD V3" address="fa167" type="3D" swapxy="true" scaling="Timing">
+		<table name="Load" address="611a6" type="X Axis" elements="22" scaling="Load"/>
+		<table name="RPM" address="61172" type="Y Axis" elements="23" scaling="RPM"/>
+	</table>
+	
+	<table name="Flex - Sensor Volts to Ethanol" type="2D" scaling="Ethanol_Percent255_byte" category="TephraXMOD V3" address="fbe60">
+		<table name="Volts" address="fbe42" type="Y Axis" elements="9" scaling="VoltsADC255"/>
+	</table>
+
+	<table name="Flex - Injector Scaling Interpolator" type="2D" scaling="Ethanol_Percent255_byte" category="TephraXMOD V3" address="fbe90">
+		<table name="Ethanol" address="fbe72" type="Y Axis" elements="9" scaling="Ethanol_Percent255_word"/>
+	</table>
+
+	<table name="Flex - Fuel Map Interpolator" type="2D" scaling="Ethanol_Percent255_byte" category="TephraXMOD V3" address="fbea0">
+		<table name="Ethanol" address="fbe72" type="Y Axis" elements="9" scaling="Ethanol_Percent255_word"/>
+	</table>
+
+	<table name="Flex - Timing Map Interpolator" type="2D" scaling="Ethanol_Percent255_byte" category="TephraXMOD V3" address="fbeb0">
+		<table name="Ethanol" address="fbe72" type="Y Axis" elements="9" scaling="Ethanol_Percent255_word"/>
+	</table>
+
+	<table name="Flex - Boost Map Interpolator" type="2D" scaling="Ethanol_Percent255_byte" category="TephraXMOD V3" address="fbec0">
+		<table name="Ethanol" address="fbe72" type="Y Axis" elements="9" scaling="Ethanol_Percent255_word"/>
+	</table>
+
+	<table name="Flex - Cranking Enrichment Map Interpolator" type="2D" scaling="Ethanol_Percent255_byte" category="TephraXMOD V3" address="fbed0">
+		<table name="Ethanol" address="fbe72" type="Y Axis" elements="9" scaling="Ethanol_Percent255_word"/>
+	</table>
+
+</rom>
